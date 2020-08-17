@@ -3,6 +3,25 @@ import { navigate } from "gatsby"
 
 const isBrowser = typeof window !== "undefined"
 
+let firebase
+let db
+if (isBrowser) {
+  firebase = require("firebase")
+}
+if (isBrowser) {
+  firebase.initializeApp({
+    apiKey: "AIzaSyCnKC0wF9ThsfZKJITVvm-rYq0AwBr2m5w",
+    authDomain: "quiz-master-3fc0a.firebaseapp.com",
+    databaseURL: "https://quiz-master-3fc0a.firebaseio.com",
+    projectId: "quiz-master-3fc0a",
+    storageBucket: "quiz-master-3fc0a.appspot.com",
+    messagingSenderId: "829516799201",
+    appId: "1:829516799201:web:0a62a1270d65a7ec0c6ba0",
+    measurementId: "G-VZWXNQTP9P",
+  })
+  db = firebase.firestore()
+}
+
 const auth = isBrowser
   ? new auth0.WebAuth({
       domain: process.env.GATSBY_AUTH0_DOMAIN,
@@ -23,7 +42,7 @@ let user = {}
 
 export const isAuthenticated = () => {
   if (!isBrowser) {
-    return;
+    return
   }
 
   return localStorage.getItem("isLoggedIn") === "true"
@@ -45,6 +64,7 @@ const setSession = (cb = () => {}) => (err, authResult) => {
   }
 
   if (authResult && authResult.accessToken && authResult.idToken) {
+      console.log(authResult, "ss")
     let expiresAt = authResult.expiresIn * 1000 + new Date().getTime()
     tokens.accessToken = authResult.accessToken
     tokens.idToken = authResult.idToken
@@ -63,15 +83,40 @@ export const silentAuth = callback => {
 
 export const handleAuthentication = () => {
   if (!isBrowser) {
-    return;
+    return
   }
 
   auth.parseHash(setSession())
 }
 
 export const getProfile = () => {
+  const userData = {
+    userName: user.name,
+    email: user.email,
+    nickname: user.name,
+    permissions: user["https://example.com/roles"]?.toString() === "admin" ? "Quiz Master" : "Quiz Player"
+  }
+
+  if (user.sub) {
+    sessionStorage.setItem("userId", `${user.sub}`)
+    if (isBrowser) {
+      db.collection("users")
+        .doc(`${user.sub}`)
+        .get()
+        .then(function (doc) {
+          if (!doc.exists) {
+            db.collection("users").doc(`${user.sub}`).set(userData)
+          }
+        })
+    }
+  } else {
+    logout()
+  }
+
   return user
 }
+
+export const firebaseDatabase = isBrowser ? db.collection('users') : null
 
 export const logout = () => {
   localStorage.setItem("isLoggedIn", false)
