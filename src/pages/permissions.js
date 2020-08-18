@@ -21,7 +21,8 @@ export default function Permissions({ user }) {
   }
 
   const chooseChoice = (choice) => {
-    firebaseDatabase.doc(`${choice.userId}`).update({permissions: permission})
+    if(isBrowser){
+    firebaseDatabase.doc(`${choice.userId}`).update({permissions: permission})}
   }
 
   if (usersList.length === 0) {
