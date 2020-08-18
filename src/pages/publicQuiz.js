@@ -46,7 +46,7 @@ export default function PublicQuiz(props) {
                 <Link to="/account/quiz/">
                 <button
                   onClick={() => props.callBackProps(item.publisedDetails)}
-                  className="btn btn-primary"
+                  className="btn btn-primary mr-2"
                 >
                   Play
                 </button>
@@ -63,7 +63,7 @@ export default function PublicQuiz(props) {
                 </Link>
 
               )}
-              {item.userId === sessionStorage.getItem("userId") ? (
+              {item.userId === sessionStorage.getItem("userId") || props.userPower === "Quiz Master" ? (
                 <button
                   onClick={() => deleteEntry(item.id)}
                   className="btn btn-primary mr-2"

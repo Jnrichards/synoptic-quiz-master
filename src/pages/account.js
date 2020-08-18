@@ -12,10 +12,9 @@ import Navbar from "react-bootstrap/Navbar"
 import Nav from "react-bootstrap/Nav"
 import Menu from "./menu"
 import Edit from "./edit"
+import Home from "./home"
+import Permissions from "./permissions"
 
-const Home = ({ user }) => {
-  return <p>Hi, {user.name ? user.name : "friend"}!</p>
-}
 
 const Account = () => {
   const [questions, setQuestions] = useState()
@@ -42,12 +41,14 @@ const Account = () => {
   })
 
   const getUserPowers = async () => {
+    if(isBrowser){
     await firebaseDatabase.doc(`${user.sub}`).get().then(data => {
       if(data.data()){
       setUserPower(data.data().permissions)}
-    })
+    })}
   }
   getUserPowers()
+
   
 
 
@@ -65,12 +66,18 @@ const Account = () => {
             <Link className="nav-item nav-link" to="/account/public/">
               Public
             </Link>{" "}
+            {userPower !== "Quiz Player" &&
             <Link className="nav-item nav-link" to="/account/menu/">
               Menu
-            </Link>{" "}
+            </Link>}
+            {userPower !== "Quiz Player" &&
             <Link className="nav-item nav-link" to="/account/create/">
               Create
-            </Link>{" "}
+            </Link>}
+            {userPower === "Quiz Master" &&
+            <Link className="nav-item nav-link" to="/account/permissions/">
+              Permissions
+            </Link>}
             <a
               className="nav-item nav-link"
               href="#logout"
@@ -84,15 +91,26 @@ const Account = () => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+      <main style={{minHeight: "85vh"}}>
       <Router>
         <Home path="/account/" user={user} />
-        {userPower === "Quiz Master" &&
+        {userPower !== "Quiz Player" &&
         <Create path="/account/create" />}
         <Quiz path="/account/quiz" userData={questions} />
-        <Menu path="/account/menu" callBackProps={callBackProps} />
-        <PublicQuiz path="/account/public" callBackProps={callBackProps} />
-        <Edit path="/account/edit"/>
+        {userPower !== "Quiz Player" &&
+        <Menu path="/account/menu" callBackProps={callBackProps} />}
+        <PublicQuiz path="/account/public" callBackProps={callBackProps} userPower={userPower} />
+        {userPower !== "Quiz Player" &&
+        <Edit path="/account/edit"/>}
+        {userPower === "Quiz Master" &&
+        <Permissions path="/account/permissions"/>}
       </Router>
+      </main>
+      <footer class="footer py-3">
+        <div class="container">
+          <span class="text-muted">&copy; Joel Richards 2020</span>
+        </div>
+      </footer>
     </>
   )
 }

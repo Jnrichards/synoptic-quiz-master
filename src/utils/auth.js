@@ -93,6 +93,7 @@ export const getProfile = () => {
     userName: user.name,
     email: user.email,
     nickname: user.name,
+    userId: user.sub,
     permissions: user["https://example.com/roles"]?.toString() === "admin" ? "Quiz Master" : "Quiz Player"
   }
 
