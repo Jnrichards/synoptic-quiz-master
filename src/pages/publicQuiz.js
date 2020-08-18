@@ -21,7 +21,6 @@ export default function PublicQuiz(props) {
     })
   }}
   getMarker()
-  console.log(menuItems.details)
 
   const deleteEntry = item => {
     if(isBrowser){

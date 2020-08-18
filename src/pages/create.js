@@ -23,13 +23,10 @@ export default class create extends Component {
     this.setState({
       [name]: value,
     })
-    console.log(this.state.question)
   }
 
   handleSubmit = event => {
     event.preventDefault()
-    console.log(this.state.option1)
-    console.log(this.state.answer, "s")
     this.state.array.push({
       options: [
         this.state.option1,
@@ -62,7 +59,6 @@ export default class create extends Component {
       question: "",
       answer: "",
     })
-    console.log(this.state.details)
     if(isBrowser){
     if (this.state.details.details.length > 2) {
       firebaseDatabase

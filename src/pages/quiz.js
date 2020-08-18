@@ -13,7 +13,6 @@ export default function Quiz({ userData }) {
   const chosen = answer => {
     if (answer === details.correctAnswer) {
         setScore(score + 1)
-        console.log("yo")
     }
     setTimeout(function () {
       setBegin(begin + 1)
@@ -27,7 +26,7 @@ export default function Quiz({ userData }) {
     <section style={{backgroundColor: "black", display: "flex", flexFlow: "column"}}>
       <p style={{textAlign: "center", color: "wheat", fontWeight: 800, fontSize: "xx-large"}}>{details.questions}</p>
       <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-      <div style={{ display: "flex", marginBottom: "10px" }}>
+      <div style={{ display: "flex", marginBottom: "10px", width: "80%" }}>
         <div
           style={{
             display: "flex",
@@ -39,7 +38,8 @@ export default function Quiz({ userData }) {
             justifyContent: "center",
             textAlignLast: "center",
             fontWeight: "bold",
-            fontSize: "xxx-large"
+            fontSize: "xxx-large",
+            textAlign: "center"
           }}
           onClick={() => chosen("1")}
         >
@@ -57,14 +57,15 @@ export default function Quiz({ userData }) {
             justifyContent: "center",
             textAlignLast: "center",
             fontWeight: "bold",
-            fontSize: "xxx-large"
+            fontSize: "xxx-large",
+            textAlign: "center"
           }}
           onClick={() => chosen("2")}
         >
           {details.answers[1]}
         </div>
       </div>
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", width: "80%" }}>
         <div
           style={{
             display: "flex",

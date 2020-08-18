@@ -24,9 +24,7 @@ export default function Menu(props) {
     })
   }}
   getMarker()
-  console.log(menuItems,"s")
   const deleteEntry = item => {
-    console.log(item)
     if(isBrowser){
     firebaseDatabase
       .doc(sessionStorage.getItem("userId"))

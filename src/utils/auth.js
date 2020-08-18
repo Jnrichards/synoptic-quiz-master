@@ -64,7 +64,6 @@ const setSession = (cb = () => {}) => (err, authResult) => {
   }
 
   if (authResult && authResult.accessToken && authResult.idToken) {
-      console.log(authResult, "ss")
     let expiresAt = authResult.expiresIn * 1000 + new Date().getTime()
     tokens.accessToken = authResult.accessToken
     tokens.idToken = authResult.idToken

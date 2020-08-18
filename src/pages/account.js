@@ -11,6 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import Navbar from "react-bootstrap/Navbar"
 import Nav from "react-bootstrap/Nav"
 import Menu from "./menu"
+import Edit from "./edit"
 
 const Home = ({ user }) => {
   return <p>Hi, {user.name ? user.name : "friend"}!</p>
@@ -21,6 +22,7 @@ const Account = () => {
 
   const callBackProps = useCallback(props => setQuestions(props))
   const [userData, setUserData] = useState()
+  const [userPower, setUserPower] = useState()
 
   if (!isAuthenticated()) {
     login()
@@ -38,6 +40,16 @@ const Account = () => {
   getData().then(value => {
     value = !userData ? setUserData(value) : null
   })
+
+  const getUserPowers = async () => {
+    await firebaseDatabase.doc(`${user.sub}`).get().then(data => {
+      if(data.data()){
+      setUserPower(data.data().permissions)}
+    })
+  }
+  getUserPowers()
+  
+
 
 
   return (
@@ -74,11 +86,12 @@ const Account = () => {
       </Navbar>
       <Router>
         <Home path="/account/" user={user} />
-        <Create path="/account/create" />
-        {/* <Menu path="/account/menu"/> */}
+        {userPower === "Quiz Master" &&
+        <Create path="/account/create" />}
         <Quiz path="/account/quiz" userData={questions} />
         <Menu path="/account/menu" callBackProps={callBackProps} />
         <PublicQuiz path="/account/public" callBackProps={callBackProps} />
+        <Edit path="/account/edit"/>
       </Router>
     </>
   )
