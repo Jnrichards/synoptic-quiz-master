@@ -5,7 +5,7 @@ import { login, isAuthenticated, getProfile,
   isBrowser } from "../utils/auth"
 import Quiz from "./quiz"
 import Create from "./create"
-import Public from "./public"
+import Public from "./publicQuiz"
 import "bootstrap/dist/css/bootstrap.min.css"
 import Menu from "./menu"
 import Edit from "./edit"
