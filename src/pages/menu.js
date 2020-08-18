@@ -7,7 +7,7 @@ export default function Menu(props) {
   const [menuItems, setMenuItems] = useState([])
   const [quizAmount, setQuizAmount] = useState()
 
-  const getMarker = async () => {
+  const getData = async () => {
     if(isBrowser){
 
     const snapshot = await firebaseDatabase
@@ -23,7 +23,7 @@ export default function Menu(props) {
       }
     })
   }}
-  getMarker()
+  getData()
   const deleteEntry = item => {
     if(isBrowser){
     firebaseDatabase

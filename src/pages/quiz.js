@@ -4,7 +4,9 @@ import Score from "./score"
 export default function Quiz({ userData }) {
   const [begin, setBegin] = useState(0)
   const [score, setScore] = useState(0)
+
   const details = userData?.details[begin]
+  const detailLength = userData?.details.length
   const [title, setTitle] = useState(null)
   if(details && title === null){
     setTitle(details.title)
@@ -18,7 +20,7 @@ export default function Quiz({ userData }) {
       setBegin(begin + 1)
     }, 2000)
   }
-    if (begin === 3){return(<Score score={score} title={title}></Score>)}
+    if (begin === 3){return(<Score score={score} title={title} length={detailLength}></Score>)}
   
   else if (details === undefined){return(<p>loading</p>)}
   else{

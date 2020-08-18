@@ -1,19 +1,17 @@
 import React, { useState, useCallback } from "react"
 import { Router } from "@reach/router"
-import { login, logout, isAuthenticated, getProfile,
+import { login, isAuthenticated, getProfile,
   firebaseDatabase,
   isBrowser } from "../utils/auth"
-import { Link } from "gatsby"
 import Quiz from "./quiz"
 import Create from "./create"
 import PublicQuiz from "./PublicQuiz"
 import "bootstrap/dist/css/bootstrap.min.css"
-import Navbar from "react-bootstrap/Navbar"
-import Nav from "react-bootstrap/Nav"
 import Menu from "./menu"
 import Edit from "./edit"
 import Home from "./home"
 import Permissions from "./permissions"
+import NavbarComponent from "./navbar"
 
 
 const Account = () => {
@@ -55,42 +53,7 @@ const Account = () => {
 
   return (
     <>
-      <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            <Link className="nav-item nav-link" to="/account/">
-              Home
-            </Link>{" "}
-            <Link className="nav-item nav-link" to="/account/public/">
-              Public
-            </Link>{" "}
-            {userPower !== "Quiz Player" &&
-            <Link className="nav-item nav-link" to="/account/menu/">
-              Menu
-            </Link>}
-            {userPower !== "Quiz Player" &&
-            <Link className="nav-item nav-link" to="/account/create/">
-              Create
-            </Link>}
-            {userPower === "Quiz Master" &&
-            <Link className="nav-item nav-link" to="/account/permissions/">
-              Permissions
-            </Link>}
-            <a
-              className="nav-item nav-link"
-              href="#logout"
-              onClick={e => {
-                logout()
-                e.preventDefault()
-              }}
-            >
-              Log Out
-            </a>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+      <NavbarComponent userPower={userPower}/>
       <main style={{minHeight: "85vh"}}>
       <Router>
         <Home path="/account/" user={user} />
