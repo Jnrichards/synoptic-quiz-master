@@ -3,7 +3,7 @@ import { firebaseDatabase, isBrowser } from "../utils/auth"
 import "bootstrap/dist/css/bootstrap.css"
 import { Link } from "gatsby"
 
-export default function public(props) {
+export default function Main(props) {
   const [menuItems, setMenuItems] = useState([])
 
   const getMarker = async props => {
