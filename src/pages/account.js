@@ -5,7 +5,7 @@ import { login, isAuthenticated, getProfile,
   isBrowser } from "../utils/auth"
 import Quiz from "./quiz"
 import Create from "./create"
-import PublicQuiz from "./PublicQuiz"
+import Public from "./public"
 import "bootstrap/dist/css/bootstrap.min.css"
 import Menu from "./menu"
 import Edit from "./edit"
@@ -62,7 +62,7 @@ const Account = () => {
         <Quiz path="/account/quiz" userData={questions} />
         {userPower !== "Quiz Player" &&
         <Menu path="/account/menu" callBackProps={callBackProps} />}
-        <PublicQuiz path="/account/public" callBackProps={callBackProps} userPower={userPower} />
+        <Public path="/account/public" callBackProps={callBackProps} userPower={userPower} />
         {userPower !== "Quiz Player" &&
         <Edit path="/account/edit"/>}
         {userPower === "Quiz Master" &&
