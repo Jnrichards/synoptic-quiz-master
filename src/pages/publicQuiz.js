@@ -24,8 +24,8 @@ export default function Main(props) {
 
   const deleteEntry = item => {
     if(isBrowser){
-    firebaseDatabase
-      .doc(sessionStorage.getItem("userId"))
+  firebaseDatabase
+      .doc("public")
       .collection(`Questions`)
       .doc(`${item}`)
       .delete()}
@@ -57,7 +57,7 @@ export default function Main(props) {
                 <button
                   onClick={() => props.callBackProps(item.details)}
                   className="btn btn-primary mr-2"
-                >
+                  >
                     Play
                 </button>
                 </Link>

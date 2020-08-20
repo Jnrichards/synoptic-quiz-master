@@ -20,7 +20,7 @@ export default function Quiz({ userData }) {
       setBegin(begin + 1)
     }, 2000)
   }
-    if (begin === 3){return(<Score score={score} title={title} length={detailLength}></Score>)}
+    if (begin === userData?.details.length){return(<Score score={score} title={title} length={detailLength}></Score>)}
   
   else if (details === undefined){return(<p>loading</p>)}
   else{
@@ -30,6 +30,7 @@ export default function Quiz({ userData }) {
       <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
       <div style={{ display: "flex", marginBottom: "10px", width: "80%" }}>
         <div
+          data-testid="choice1"
           style={{
             display: "flex",
             height: "40vh",
@@ -48,6 +49,7 @@ export default function Quiz({ userData }) {
           {details.answers[0]}
         </div>
         <div
+          data-testid="choice2"
           style={{
             display: "flex",
             height: "40vh",
@@ -69,6 +71,7 @@ export default function Quiz({ userData }) {
       </div>
       <div style={{ display: "flex", width: "80%" }}>
         <div
+          data-testid="choice3"
           style={{
             display: "flex",
             height: "40vh",
@@ -86,6 +89,7 @@ export default function Quiz({ userData }) {
           {details.answers[2]}
         </div>
          <div
+         data-testid="choice4"
           style={{
             display: "flex",
             height: "40vh",

@@ -3,18 +3,26 @@ import { isBrowser, firebaseDatabase } from "../utils/auth"
 
 export default function Home() {
   const [scoreList, setScore] = useState([])
+  let [,setrender] = useState()
+  function render() {
+      setrender({})
+  }
   const [test, setTest] = useState([])
   const getData = async () => {
     let arr = []
+    let docLength = 0
     if (isBrowser) {
       const snapshot = await firebaseDatabase
         .doc(sessionStorage.getItem("userId"))
         .collection(`Scores`)
       snapshot.get().then(querySnapshot => {
+        docLength = querySnapshot.docs.length
         querySnapshot.docs.map(doc => {
           if (scoreList.length === 0) {
+    
             arr.push(doc.data())
-            setScore(arr)
+            if(arr.length === docLength){
+            setScore(arr)}
           }
         })
       })
@@ -23,6 +31,10 @@ export default function Home() {
   getData()
   
   useEffect(() => {setTest(scoreList)}, [scoreList])
+  useEffect(() => {render()}, [scoreList])
+  console.log(test)
+
+  
   return (
     test.map(score => (
     <div class="card mb-3">

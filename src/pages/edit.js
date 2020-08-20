@@ -13,6 +13,7 @@ export default class edit extends Component {
     doc: [],
     index: 0,
     title: "",
+    type: "Edit"
   }
 
   async componentDidMount() {
@@ -73,8 +74,12 @@ export default class edit extends Component {
       title: this.state.title,
     }
     const array = this.state.doc[0]
+    if(this.state.type === "Add"){
+      array.concat(details)
+    }else{
+      array.splice(this.state.index, 1, details)
 
-    array.splice(this.state.index, 1, details)
+    }
 
     if(isBrowser){
     firebaseDatabase.doc(sessionStorage.getItem("userId"))
@@ -98,12 +103,24 @@ export default class edit extends Component {
     return (
       <div>
         <select onChange={this.chooseQuestion}>
+            <option >...choose</option>
           {this.state.doc[0]?.map((doc, index) => (
             <option value={`${index}`}>{doc.questions}</option>
           ))}
         </select>
         <form onSubmit={this.handleSubmit}>
           <div class="form-row">
+          <div class="form-group col-md-12">
+              <label for="inputQuestion">Question</label>
+              <input
+                class="form-control"
+                id="inputQuestion"
+                placeholder="question"
+                name="question"
+                value={this.state.question}
+                onChange={this.handleInputChange}
+              />
+            </div>
             <div class="form-group col-md-6">
               <label for="inputAnswer1">Answer 1</label>
               <input
@@ -151,8 +168,20 @@ export default class edit extends Component {
                 onChange={this.handleInputChange}
               />
             </div>
+            <div class="form-group col-md-6">
+              <label>Edit Question or Add new Question</label>
+              <select
+                class="ml-3"
+                name="type"
+                onChange={this.handleInputChange}
+                value={this.state.type}
+              >
+                <option value="Edit">Edit</option>
+                <option value="Add">Add</option>
+              </select>
+            </div>
             <button type="submit" class="btn btn-primary">
-              Edit Question
+              {this.state.type === "Edit" ? "Edit Question" : "Add Question"}
             </button>
           </div>
         </form>
